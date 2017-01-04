@@ -1,0 +1,38 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:3.1.1'
+    }
+}
+
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+targetCompatibility = JavaVersion.VERSION_1_7
+sourceCompatibility = JavaVersion.VERSION_1_7
+
+
+dependencies {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+
+    compile gradleApi()
+    compile localGroovy()
+
+    compile 'com.android.tools.build:gradle:2.1.2'
+    compile "org.aspectj:aspectjtools:${aspectjVersion}"
+    compile "org.aspectj:aspectjrt:${aspectjVersion}"
+    compile 'com.android.tools.build:transform-api:1.5.0'
+//    compile 'commons-io:commons-io:2.4'
+}
+
+apply from: 'bintray.gradle'
+apply from: 'maven.gradle'
