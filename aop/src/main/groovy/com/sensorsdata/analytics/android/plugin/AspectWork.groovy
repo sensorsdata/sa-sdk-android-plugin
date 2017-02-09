@@ -23,7 +23,7 @@ class AspectWork {
     public String sourceCompatibility
     public String targetCompatibility
     public String destinationDir
-    public List<String> userArgs
+    public List<String> ajcArgs
 
     AspectWork(Project proj) {
         project = proj
@@ -60,10 +60,6 @@ class AspectWork {
                 "-bootclasspath", bootClassPath
         ]
 
-        if(userArgs != null && userArgs.size()>0){
-            args.addAll(userArgs)
-        }
-
         if (!getInPath().isEmpty()) {
             args << '-inpath'
             args << getInPath().join(File.pathSeparator)
@@ -71,6 +67,21 @@ class AspectWork {
         if (!getAspectPath().isEmpty()) {
             args << '-aspectpath'
             args << getAspectPath().join(File.pathSeparator)
+        }
+
+
+        if(ajcArgs != null && !ajcArgs.isEmpty()) {
+            if (!ajcArgs.contains('-Xlint')) {
+                args.add('-Xlint:ignore')
+            }
+            if (!ajcArgs.contains('-warn')) {
+                args.add('-warn:none')
+            }
+
+            args.addAll(ajcArgs)
+        } else {
+            args.add('-Xlint:ignore')
+            args.add('-warn:none')
         }
 
         MessageHandler handler = new MessageHandler(true);
@@ -163,7 +174,7 @@ class AspectWork {
         this.destinationDir = destinationDir;
     }
 
-    public  void setUserArgs(List<String> userArgs) {
-        this.userArgs = userArgs
+    public void setAjcArgs(List<String> ajcArgs) {
+        this.ajcArgs = ajcArgs
     }
 }

@@ -51,7 +51,6 @@ public class JarMerger {
 
     /**
      * Sets a list of regex to exclude from the jar.
-     * @param filter IZipEntryFilter
      */
     public void setFilter(@NonNull IZipEntryFilter filter) {
         this.filter = filter;
@@ -206,8 +205,9 @@ public class JarMerger {
          * Checks a file for inclusion in a Jar archive.
          * @param archivePath the archive file path of the entry
          * @return <code>true</code> if the file should be included.
-         * @throws ZipAbortException if writing the file should be aborted.
+         * @throws IZipEntryFilter.ZipAbortException if writing the file should be aborted.
          */
-        boolean checkEntry(String archivePath) throws ZipAbortException;
+        boolean checkEntry(String archivePath) throws IZipEntryFilter.ZipAbortException;
     }
 }
+

@@ -99,8 +99,8 @@ class AspectTransform extends Transform {
 
         List<String> includeJarFilter = project.sensorsAnalytics.includeJarFilter
         List<String> excludeJarFilter = project.sensorsAnalytics.excludeJarFilter
-        
-        aspectWork.setUserArgs(project.sensorsAnalytics.args);
+
+        aspectWork.setAjcArgs(project.sensorsAnalytics.ajcArgs);
 
         for (TransformInput transformInput : inputs) {
             for (DirectoryInput directoryInput : transformInput.directoryInputs) {
@@ -119,7 +119,7 @@ class AspectTransform extends Transform {
 
                 String jarPath = jarInput.file.absolutePath
                 if (isIncludeFilterMatched(jarPath, includeJarFilter)
-                    && !isExcludeFilterMatched(jarPath, excludeJarFilter)) {
+                        && !isExcludeFilterMatched(jarPath, excludeJarFilter)) {
                     println "includeJar:::${jarPath}"
                     aspectWork.inPath << jarInput.file
                 } else {
