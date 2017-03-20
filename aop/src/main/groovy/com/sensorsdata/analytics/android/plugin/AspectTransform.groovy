@@ -24,6 +24,8 @@ import org.gradle.api.tasks.compile.JavaCompile
  */
 class AspectTransform extends Transform {
 
+    static final ASPECTJRT = "aspectjrt"
+
     Project project
     String encoding
     String bootClassPath
@@ -78,6 +80,48 @@ class AspectTransform extends Transform {
                    , TransformOutputProvider outputProvider
                    , boolean isIncremental) throws IOException, TransformException, InterruptedException {
 
+        def hasAjRt = false
+        for (TransformInput transformInput : inputs) {
+            for (JarInput jarInput : transformInput.jarInputs) {
+                if (jarInput.file.absolutePath.contains(ASPECTJRT)) {
+                    hasAjRt = true
+                    break
+                }
+            }
+            if (hasAjRt) break
+        }
+
+        //clean
+        if (!isIncremental){
+            outputProvider.deleteAll()
+        }
+
+        if (hasAjRt){
+            doAspectTransform(outputProvider, inputs)
+        } else {
+            println "there is no aspectjrt dependencies in classpath, do nothing "
+            inputs.each {TransformInput input ->
+                input.directoryInputs.each {DirectoryInput directoryInput->
+                    def dest = outputProvider.getContentLocation(directoryInput.name,
+                            directoryInput.contentTypes, directoryInput.scopes,
+                            Format.DIRECTORY)
+                    FileUtil.copyDir(directoryInput.file, dest)
+                    println "directoryInput = ${directoryInput.name}"
+                }
+
+                input.jarInputs.each {JarInput jarInput->
+                    def jarName = jarInput.name
+                    def dest = outputProvider.getContentLocation(jarName,
+                            jarInput.contentTypes, jarInput.scopes, Format.JAR)
+
+                    FileUtil.copyFile(jarInput.file, dest)
+                    println "jarInput = ${jarInput.name}"
+                }
+            }
+        }
+    }
+
+    private void doAspectTransform(TransformOutputProvider outputProvider, Collection<TransformInput> inputs) {
         println "SensorsAnalytics AOP start.........."
         AspectWork aspectWork = new AspectWork(project)
         aspectWork.encoding = encoding
@@ -85,12 +129,10 @@ class AspectTransform extends Transform {
         aspectWork.sourceCompatibility = sourceCompatibility
         aspectWork.targetCompatibility = targetCompatibility
 
-        //clean
-        outputProvider.deleteAll()
-
         //create aspect destination dir
         File resultDir = outputProvider.getContentLocation("aspect", getOutputTypes(), getScopes(), Format.DIRECTORY);
         if (resultDir.exists()) {
+            println "delete resultDir ${resultDir.absolutePath}"
             FileUtils.deleteFolder(resultDir)
         }
         FileUtils.mkdirs(resultDir);
@@ -129,7 +171,6 @@ class AspectTransform extends Transform {
             }
         }
 
-        //aspect work
         aspectWork.doWork()
 
         //add class file to aspect result jar
