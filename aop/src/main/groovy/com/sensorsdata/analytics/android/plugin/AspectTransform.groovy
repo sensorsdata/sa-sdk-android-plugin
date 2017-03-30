@@ -175,8 +175,9 @@ class AspectTransform extends Transform {
                 aspectWork.classPath << jarInput.file
 
                 String jarPath = jarInput.file.absolutePath
-                if (isIncludeFilterMatched(jarPath, includeJarFilter)
-                        && !isExcludeFilterMatched(jarPath, excludeJarFilter)) {
+//                if (isIncludeFilterMatched(jarPath, includeJarFilter)
+//                        && !isExcludeFilterMatched(jarPath, excludeJarFilter)) {
+                if (isIncludeFilterMatched(jarPath, includeJarFilter)) {
                     println "includeJar:::${jarPath}"
                     aspectWork.inPath << jarInput.file
                 } else {
@@ -234,7 +235,8 @@ class AspectTransform extends Transform {
         }
 
         if (filters == null || filters.isEmpty()) {
-            return filterPolicy == FilterPolicy.INCLUDE
+//            return filterPolicy == FilterPolicy.INCLUDE
+            return filterPolicy == FilterPolicy.EXCLUDE
         }
 
         for (String s : filters) {

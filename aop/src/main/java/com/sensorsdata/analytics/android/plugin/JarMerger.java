@@ -61,6 +61,7 @@ public class JarMerger {
 
     /**
      * Sets a list of regex to exclude from the jar.
+     * @param filter IZipEntryFilter
      */
     public void setFilter(@NonNull IZipEntryFilter filter) {
         this.filter = filter;
