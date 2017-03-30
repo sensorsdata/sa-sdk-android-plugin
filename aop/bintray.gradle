@@ -4,7 +4,7 @@ apply plugin: 'java'
 apply plugin: 'signing'
 apply plugin: 'maven'
 
-version = "1.0.3"
+version = "1.0.4"
 project.archivesBaseName = "android-gradle-plugin"
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
