@@ -16,7 +16,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
         //添加 android-gradle-plugin 依赖
-        classpath 'com.sensorsdata.analytics.android:android-gradle-plugin:1.0.5'
+        classpath 'com.sensorsdata.analytics.android:android-gradle-plugin:1.0.6'
     }
 }
 

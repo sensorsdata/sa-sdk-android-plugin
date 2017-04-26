@@ -1,6 +1,6 @@
 apply plugin: 'maven'
 
-version="1.0.5"
+version="1.0.6"
 group = "com.sensorsdata.analytics.android"
 def nexusRepositoryUrl=nexusReleases
 
