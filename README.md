@@ -37,14 +37,10 @@ apply plugin: 'com.android.application'
 //添加 com.sensorsdata.analytics.android 插件
 apply plugin: 'com.sensorsdata.analytics.android'
 
-sensorsAnalytics {
-    includeJarFilter 'SensorsAnalyticsSDK-Beta', 'com.android.support'
-}
-
 dependencies {
    compile 'com.android.support:appcompat-v7:25.1.1'
    //添加 Sensors Analytics SDK 依赖
-   compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK-Beta:1.7.0'
+   compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.7.1'
 }
 ```
 
@@ -52,17 +48,7 @@ dependencies {
 ![](https://www.sensorsdata.cn/manual/img/android_sdk_autotrack_2.png)
 
 *注*：
-
-1、针对 butterknife  设置的点击事件，还需要做一下调整，才能采集到点击事件。
-调整方案有两种：
-
-* 方案①：在点击事件上加我们的注解：@SensorsDataTrackViewOnClick
-* 方案②：写成标准的点击事件名 `onClick` 并且 implements View.OnClickListener 接口
-
-如下示例图：
-![](https://www.sensorsdata.cn/manual/img/android_sdk_autotrack_6.png)
-
-2、在 project 级别的 gradle.properties 中添加如下配置：
+1、在 project 级别的 gradle.properties 中添加如下配置：
 
 ```android
 android.enableBuildCache=false
@@ -73,12 +59,12 @@ android.enableBuildCache=false
 
 如果开启 buildCache，Android Studio 会把依赖的 jar 或 arr 缓存到本地，并且把模块名称设置为 hash 值，导致 includeJarFilter 配置失效。
 
-3、目前全埋点不支持 Android Studio 的 instant run 特性，使用全埋点需要关闭该特性。
+2、目前全埋点不支持 Android Studio 的 instant run 特性，使用全埋点需要关闭该特性。
 
 如下示例图：
 ![](https://www.sensorsdata.cn/manual/img/android_sdk_autotrack_4.png)
 
-4、由于 SDK 会依赖 appcompat-v7 处理下面几个控件：
+3、由于 SDK 会依赖 appcompat-v7 处理下面几个控件：
 
 * android.support.v7.widget.SwitchCompat
 * android.support.v7.app.AlertDialog
