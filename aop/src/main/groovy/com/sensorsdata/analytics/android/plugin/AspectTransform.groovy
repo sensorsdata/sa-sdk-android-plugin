@@ -157,8 +157,6 @@ class AspectTransform extends Transform {
         List<String> includeJarFilter = project.sensorsAnalytics.includeJarFilter
         List<String> excludeJarFilter = project.sensorsAnalytics.excludeJarFilter
 
-        includeJarFilter.add("SensorsAnalyticsSDK-release")
-        includeJarFilter.add("SensorsAnalyticsSDK-Beta")
         includeJarFilter.add("SensorsAnalyticsSDK")
         includeJarFilter.add("com.android.support")
 
