@@ -36,7 +36,7 @@ class AndroidAspectJXPlugin implements Plugin<Project> {
         }
 
         project.dependencies {
-            compile 'org.aspectj:aspectjrt:1.8.9'
+            compile 'org.aspectj:aspectjrt:1.8.10'
         }
 
         project.extensions.create("sensorsAnalytics", AspectjExtension)
