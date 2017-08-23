@@ -160,6 +160,7 @@ class AspectTransform extends Transform {
         includeJarFilter.add("SensorsAnalyticsSDK")
         includeJarFilter.add("com.android.support")
         includeJarFilter.add("com.facebook.react")
+        includeJarFilter.add("SensorsAnalyticsSDK-Runtime")
 
         aspectWork.setAjcArgs(project.sensorsAnalytics.ajcArgs);
 
