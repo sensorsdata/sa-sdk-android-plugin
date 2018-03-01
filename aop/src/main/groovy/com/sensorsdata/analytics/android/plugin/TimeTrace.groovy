@@ -66,12 +66,23 @@ class TimeTrace implements TaskExecutionListener, BuildListener {
 
     @Override
     void beforeExecute(Task task) {
-        clock = new Clock()
+        try {
+            clock = new Clock()
+        } catch (Exception e) {
+            // for gradle 4.4
+            clock = new Clock(new Date().getTime())
+        }
     }
 
     @Override
     void afterExecute(Task task, TaskState state) {
-        def ms = clock.timeInMs
+        def ms
+        try {
+            ms = clock.timeInMs
+        } catch (Exception e) {
+            // for gradle 4.4
+            ms = clock.getStartTime()
+        }
         times.add([ms, task.path])
         task.project.logger.warn("${task.path} spend ${ms}ms")
     }
