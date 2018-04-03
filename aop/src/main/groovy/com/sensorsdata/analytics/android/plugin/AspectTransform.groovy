@@ -174,6 +174,11 @@ class AspectTransform extends Transform {
         includeJarFilter.add("com.facebook.react")
         includeJarFilter.add("SensorsAnalyticsSDK-Runtime")
 
+        //for gradle 3.x+
+        includeJarFilter.add("support-v4")
+        includeJarFilter.add("appcompat-v7")
+        includeJarFilter.add("react-native")
+
         aspectWork.setAjcArgs(project.sensorsAnalytics.ajcArgs);
 
         for (TransformInput transformInput : inputs) {
